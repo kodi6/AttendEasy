@@ -7,5 +7,7 @@ defmodule AttendEasyWeb.Router do
 
   scope "/api", AttendEasyWeb do
     pipe_through :api
+
+    resources "/classes", ClassController, except: [:new, :edit]
   end
 end
