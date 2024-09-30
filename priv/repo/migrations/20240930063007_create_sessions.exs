@@ -6,7 +6,7 @@ defmodule AttendEasy.Repo.Migrations.CreateSessions do
       add :id, :binary_id, primary_key: true
       add :date, :date
       add :session_type, :string
-      add :class_id, references(:classes, on_delete: :nothing, type: :binary_id)
+      add :class_id, references(:classes, on_delete: :delete_all, type: :binary_id)
 
       timestamps(type: :utc_datetime)
     end

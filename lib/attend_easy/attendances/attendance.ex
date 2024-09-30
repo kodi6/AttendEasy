@@ -5,7 +5,7 @@ defmodule AttendEasy.Attendances.Attendance do
   @primary_key {:id, :binary_id, autogenerate: true}
   @foreign_key_type :binary_id
   schema "attendances" do
-    field :is_present, :boolean, default: false
+    field :is_present, :boolean, default: true
     field :student_id, :binary_id
     field :session_id, :binary_id
 
