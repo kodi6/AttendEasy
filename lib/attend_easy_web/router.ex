@@ -11,5 +11,6 @@ defmodule AttendEasyWeb.Router do
     resources "/classes", ClassController, except: [:new, :edit]
     resources "/students", StudentController, except: [:new, :edit]
     resources "/sessions", SessionController, except: [:new, :edit]
+    resources "/attendances", AttendanceController, except: [:new, :edit]
   end
 end
