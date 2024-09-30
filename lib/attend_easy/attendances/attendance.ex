@@ -6,8 +6,8 @@ defmodule AttendEasy.Attendances.Attendance do
   @foreign_key_type :binary_id
   schema "attendances" do
     field :is_present, :boolean, default: true
-    field :student_id, :binary_id
-    field :session_id, :binary_id
+    belongs_to :Student, AttendEasy.Students.Student
+    belongs_to :session, AttendEasy.Sessions.Session
 
     timestamps(type: :utc_datetime)
   end
@@ -15,7 +15,7 @@ defmodule AttendEasy.Attendances.Attendance do
   @doc false
   def changeset(attendance, attrs) do
     attendance
-    |> cast(attrs, [:is_present])
-    |> validate_required([:is_present])
+    |> cast(attrs, [:is_present, :session_id, :student_id])
+    |> validate_required([:is_present, :session_id, :student_id])
   end
 end

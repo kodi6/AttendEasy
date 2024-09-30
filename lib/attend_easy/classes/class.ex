@@ -6,6 +6,8 @@ defmodule AttendEasy.Classes.Class do
   @foreign_key_type :binary_id
   schema "classes" do
     field :name, :string
+    has_many :Students, AttendEasy.Students.Student
+    has_many :Sessions, AttendEasy.Sessions.Session
 
     timestamps(type: :utc_datetime)
   end
