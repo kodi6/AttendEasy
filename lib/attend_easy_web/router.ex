@@ -9,5 +9,6 @@ defmodule AttendEasyWeb.Router do
     pipe_through :api
 
     resources "/classes", ClassController, except: [:new, :edit]
+    resources "/students", StudentController, except: [:new, :edit]
   end
 end
