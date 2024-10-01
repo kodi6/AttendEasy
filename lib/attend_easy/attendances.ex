@@ -37,6 +37,12 @@ defmodule AttendEasy.Attendances do
   """
   def get_attendance!(id), do: Repo.get!(Attendance, id)
 
+  def get_attendance_by_student(student_id) do
+    Attendance
+    |> where([a], a.student_id == ^student_id)
+    |> Repo.one()
+  end
+
   @doc """
   Creates a attendance.
 

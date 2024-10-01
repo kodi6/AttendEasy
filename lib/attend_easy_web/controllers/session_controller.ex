@@ -3,6 +3,7 @@ defmodule AttendEasyWeb.SessionController do
 
   alias AttendEasy.Sessions
   alias AttendEasy.Sessions.Session
+  alias AttendEasy.Students
 
   action_fallback AttendEasyWeb.FallbackController
 
@@ -11,12 +12,16 @@ defmodule AttendEasyWeb.SessionController do
     render(conn, :index, sessions: sessions)
   end
 
-  def create(conn, %{"session" => session_params}) do
-    with {:ok, %Session{} = session} <- Sessions.create_session(session_params) do
+  def create(conn, %{"class_id" => class_id, "session" => session_params}) do
+    with {:ok, %Session{} = session} <- Sessions.create_session(class_id, session_params) do
+      students = Students.list_students_by_class(class_id)
+
       conn
       |> put_status(:created)
-      |> put_resp_header("location", ~p"/api/sessions/#{session}")
-      |> render(:show, session: session)
+      # |> put_resp_header("location", ~p"/api/sessions/#{session}")
+      |> assign(:session, session)
+      |> assign(:students, students)
+      |> render(:show)
     end
   end
 

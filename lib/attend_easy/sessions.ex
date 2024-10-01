@@ -49,7 +49,9 @@ defmodule AttendEasy.Sessions do
       {:error, %Ecto.Changeset{}}
 
   """
-  def create_session(attrs \\ %{}) do
+  def create_session(class_id, attrs \\ %{}) do
+    attrs = Map.put(attrs, "class_id", class_id)
+
     %Session{}
     |> Session.changeset(attrs)
     |> Repo.insert()

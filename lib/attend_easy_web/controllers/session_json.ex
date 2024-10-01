@@ -11,15 +11,32 @@ defmodule AttendEasyWeb.SessionJSON do
   @doc """
   Renders a single session.
   """
-  def show(%{session: session}) do
-    %{data: data(session)}
+  def show(%{session: session, students: students}) do
+    %{
+      status: "success",
+      session_id: session.id,
+      class_id: session.class_id,
+      date: session.date,
+      session_type: session.session_type,
+      students: render_students(students)
+    }
   end
 
   defp data(%Session{} = session) do
     %{
-      id: session.id,
+      session_id: session.id,
+      class_id: session.class_id,
       date: session.date,
       session_type: session.session_type
     }
+  end
+
+  def render_students(students) do
+    for student <- students do
+      %{
+        id: student.id,
+        name: student.name
+      }
+    end
   end
 end

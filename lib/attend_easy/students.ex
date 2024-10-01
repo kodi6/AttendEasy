@@ -7,6 +7,9 @@ defmodule AttendEasy.Students do
   alias AttendEasy.Repo
 
   alias AttendEasy.Students.Student
+  alias AttendEasy.Sessions
+
+  alias AttendEasy.Attendances
 
   @doc """
   Returns the list of students.
@@ -19,6 +22,12 @@ defmodule AttendEasy.Students do
   """
   def list_students do
     Repo.all(Student)
+  end
+
+  def list_students_by_class(class_id) do
+    Student
+    |> where([s], s.class_id == ^class_id)
+    |> Repo.all()
   end
 
   @doc """
@@ -49,7 +58,9 @@ defmodule AttendEasy.Students do
       {:error, %Ecto.Changeset{}}
 
   """
-  def create_student(attrs \\ %{}) do
+  def create_student(class_id, attrs \\ %{}) do
+    attrs = Map.put(attrs, "class_id", class_id)
+
     %Student{}
     |> Student.changeset(attrs)
     |> Repo.insert()
@@ -100,5 +111,28 @@ defmodule AttendEasy.Students do
   """
   def change_student(%Student{} = student, attrs \\ %{}) do
     Student.changeset(student, attrs)
+  end
+
+  def mark_present_students(session_id, absentee_ids) do
+    class_id = Sessions.get_session!(session_id).class_id
+
+    present_students_query =
+      from(s in Student,
+        where: s.class_id == ^class_id and s.id not in ^absentee_ids,
+        select: %{student_id: s.id}
+      )
+
+    present_students = Repo.all(present_students_query)
+
+    Enum.map(present_students, fn present_student ->
+      {:ok, attendance} =
+        Attendances.create_attendance(%{
+          student_id: present_student.student_id,
+          session_id: session_id,
+          is_present: true
+        })
+
+      attendance.id
+    end)
   end
 end

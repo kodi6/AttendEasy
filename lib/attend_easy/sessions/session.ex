@@ -10,8 +10,6 @@ defmodule AttendEasy.Sessions.Session do
     belongs_to :class, AttendEasy.Classes.Class
     has_many :attendances, AttendEasy.Attendances.Attendance
 
-
-
     timestamps(type: :utc_datetime)
   end
 

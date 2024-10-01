@@ -13,32 +13,42 @@ defmodule AttendEasyWeb.Router do
     # resources "/sessions", SessionController, except: [:new, :edit]
     # resources "/attendances", AttendanceController, except: [:new, :edit]
 
-    get "/api/classes", ClassController, :index
-    get "/api/classes/:id", ClassController, :show
-    post "/api/classes", ClassController, :create
-    patch "/api/classes/:id", ClassController, :update
-    put "/api/classes/:id", ClassController, :update
-    delete "/api/classes/:id", ClassController, :delete
+    get "/classes", ClassController, :index
+    post "/classes", ClassController, :create
 
-    get "/api/students", StudentController, :index
-    get "/api/students/:id", StudentController, :show
-    post "/api/students", StudentController, :create
-    patch "/api/students/:id", StudentController, :update
-    put "/api/students/:id", StudentController, :update
-    delete "/api/students/:id", StudentController, :delete
+    get "/classes/:class_id/students", StudentController, :index
+    post "/classes/:class_id/students", StudentController, :create
 
-    get "/api/sessions", SessionController, :index
-    get "/api/sessions/:id", SessionController, :show
-    post "/api/sessions", SessionController, :create
-    patch "/api/sessions/:id", SessionController, :update
-    put "/api/sessions/:id", SessionController, :update
-    delete "/api/sessions/:id", SessionController, :delete
+    post "/classes/:class_id/sessions", SessionController, :create
 
-    get "/api/attendances", AttendanceController, :index
-    get "/api/attendances/:id", AttendanceController, :show
-    post "/api/attendances", AttendanceController, :create
-    patch "/api/attendances/:id", AttendanceController, :update
-    put "/api/attendances/:id", AttendanceController, :update
-    delete "/api/attendances/:id", AttendanceController, :delete
+    post "/sessions/:session_id/attendance", AttendanceController, :create
+    put "/sessions/:session_id/attendance", AttendanceController, :update
+
+    # post "/classes/:class_id/sessions/:sessions_id/attendances", AttendanceController, :create
+
+    # get "/classes/:id", ClassController, :show
+    # patch "/classes/:id", ClassController, :update
+    # put "/classes/:id", ClassController, :update
+    # delete "/classes/:id", ClassController, :delete
+
+    # get "/students", StudentController, :index
+    # get "/students/:id", StudentController, :show
+    # post "/students", StudentController, :create
+    # patch "/students/:id", StudentController, :update
+    # put "/students/:id", StudentController, :update
+    # delete "/students/:id", StudentController, :delete
+
+    # get "/sessions", SessionController, :index
+    # get "/sessions/:id", SessionController, :show
+    # patch "/sessions/:id", SessionController, :update
+    # put "/sessions/:id", SessionController, :update
+    # delete "/sessions/:id", SessionController, :delete
+
+    # get "/attendances", AttendanceController, :index
+    # get "/attendances/:id", AttendanceController, :show
+    # # post "/attendances", AttendanceController, :create
+    # patch "/attendances/:id", AttendanceController, :update
+    # put "/attendances/:id", AttendanceController, :update
+    # delete "/attendances/:id", AttendanceController, :delete
   end
 end
