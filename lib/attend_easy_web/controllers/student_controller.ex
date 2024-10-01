@@ -11,8 +11,8 @@ defmodule AttendEasyWeb.StudentController do
     render(conn, :index, students: students)
   end
 
-  def create(conn, %{"student" => student_params}) do
-    with {:ok, %Student{} = student} <- Students.create_student(student_params) do
+  def create(conn, %{"class_id" => class_id, "student" => student_params}) do
+    with {:ok, %Student{} = student} <- Students.create_student(class_id, student_params) do
       conn
       |> put_status(:created)
       |> put_resp_header("location", ~p"/api/students/#{student}")

@@ -5,7 +5,10 @@ defmodule AttendEasyWeb.ClassJSON do
   Renders a list of classes.
   """
   def index(%{classes: classes}) do
-    %{data: for(class <- classes, do: data(class))}
+    %{
+      status: "success",
+      classes: for(class <- classes, do: data(class))
+    }
   end
 
   @doc """

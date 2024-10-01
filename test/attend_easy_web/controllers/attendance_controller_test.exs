@@ -46,7 +46,10 @@ defmodule AttendEasyWeb.AttendanceControllerTest do
   describe "update attendance" do
     setup [:create_attendance]
 
-    test "renders attendance when data is valid", %{conn: conn, attendance: %Attendance{id: id} = attendance} do
+    test "renders attendance when data is valid", %{
+      conn: conn,
+      attendance: %Attendance{id: id} = attendance
+    } do
       conn = put(conn, ~p"/api/attendances/#{attendance}", attendance: @update_attrs)
       assert %{"id" => ^id} = json_response(conn, 200)["data"]
 

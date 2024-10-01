@@ -6,7 +6,8 @@ defmodule AttendEasy.Students.Student do
   @foreign_key_type :binary_id
   schema "students" do
     field :name, :string
-    field :class_id, :binary_id
+    belongs_to :class, AttendEasy.Classes.Class
+    has_many :attendances, AttendEasy.Attendances.Attendance
 
     timestamps(type: :utc_datetime)
   end
@@ -14,7 +15,7 @@ defmodule AttendEasy.Students.Student do
   @doc false
   def changeset(student, attrs) do
     student
-    |> cast(attrs, [:name])
-    |> validate_required([:name])
+    |> cast(attrs, [:name, :class_id])
+    |> validate_required([:name, :class_id])
   end
 end

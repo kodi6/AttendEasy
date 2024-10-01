@@ -4,9 +4,9 @@ defmodule AttendEasy.Repo.Migrations.CreateAttendances do
   def change do
     create table(:attendances, primary_key: false) do
       add :id, :binary_id, primary_key: true
-      add :is_present, :boolean, default: false, null: false
-      add :student_id, references(:students, on_delete: :nothing, type: :binary_id)
-      add :session_id, references(:sessions, on_delete: :nothing, type: :binary_id)
+      add :is_present, :boolean, default: true, null: false
+      add :student_id, references(:students, on_delete: :delete_all, type: :binary_id)
+      add :session_id, references(:sessions, on_delete: :delete_all, type: :binary_id)
 
       timestamps(type: :utc_datetime)
     end

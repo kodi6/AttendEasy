@@ -7,7 +7,8 @@ defmodule AttendEasy.Sessions.Session do
   schema "sessions" do
     field :date, :date
     field :session_type, :string
-    field :class_id, :binary_id
+    belongs_to :class, AttendEasy.Classes.Class
+    has_many :attendances, AttendEasy.Attendances.Attendance
 
     timestamps(type: :utc_datetime)
   end
@@ -15,7 +16,7 @@ defmodule AttendEasy.Sessions.Session do
   @doc false
   def changeset(session, attrs) do
     session
-    |> cast(attrs, [:date, :session_type])
-    |> validate_required([:date, :session_type])
+    |> cast(attrs, [:date, :session_type, :class_id])
+    |> validate_required([:date, :session_type, :class_id])
   end
 end
